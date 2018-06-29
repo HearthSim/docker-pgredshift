@@ -26,4 +26,6 @@ COPY [ \
 	"sql/00_system.sql", \
 	"/docker-entrypoint-initdb.d/"]
 
+ENV POSTGRES_DB dev
+
 EXPOSE 5439
