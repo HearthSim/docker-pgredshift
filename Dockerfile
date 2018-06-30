@@ -14,11 +14,6 @@ RUN \
 	sed "/shared_preload_libraries/d" -i /usr/share/postgresql/postgresql.conf.sample && \
 	echo "shared_preload_libraries = 'query_group'" >> /usr/share/postgresql/postgresql.conf.sample
 
-# Change port to 5439
-RUN \
-	sed -i "s/#port = 5432/port = 5439/" /usr/share/postgresql/postgresql.conf.sample && \
-	sed -i "s/psql -v ON_ERROR_STOP=1/psql -v ON_ERROR_STOP=1 --port=5439/" /docker-entrypoint.sh
-
 COPY [ \
 	"sql/00_functions.sql", \
 	"sql/00_stl_tables.sql", \
@@ -28,4 +23,4 @@ COPY [ \
 
 ENV POSTGRES_DB dev
 
-EXPOSE 5439
+EXPOSE 5432
