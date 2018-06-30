@@ -21,7 +21,7 @@ CREATE TABLE stv_blocklist (
 	newblock INTEGER,
 	num_readers INTEGER,
 	flags INTEGER
-)
+);
 
 -- stv_tbl_perm table
 CREATE TABLE stv_tbl_perm (
@@ -35,4 +35,4 @@ CREATE TABLE stv_tbl_perm (
 	insert_pristine INTEGER,
 	delete_pristine INTEGER,
 	backup INTEGER
-)
+);
