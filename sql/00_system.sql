@@ -1,6 +1,11 @@
+-- The following SQL needs `allow_system_table_mods = on` to run.
+-- Unfortunately, it's not very well-supported.
+-- I mean, it segfaults postgres.
+-- Not cool.
+
 -- Additional pg_attribute columns
-ALTER TABLE pg_attribute ADD COLUMN IF NOT EXISTS attisdistkey boolean;
-ALTER TABLE pg_attribute ADD COLUMN IF NOT EXISTS attencrypttype smallint;
-ALTER TABLE pg_attribute ADD COLUMN IF NOT EXISTS attencodingtype smallint;
-ALTER TABLE pg_attribute ADD COLUMN IF NOT EXISTS attispreloaded boolean;
-ALTER TABLE pg_attribute ADD COLUMN IF NOT EXISTS attsortkeyword integer;
+-- ALTER TABLE pg_attribute ADD COLUMN attisdistkey boolean;
+-- ALTER TABLE pg_attribute ADD COLUMN attencrypttype smallint;
+-- ALTER TABLE pg_attribute ADD COLUMN attencodingtype smallint;
+-- ALTER TABLE pg_attribute ADD COLUMN attispreloaded boolean;
+-- ALTER TABLE pg_attribute ADD COLUMN attsortkeyword integer;
