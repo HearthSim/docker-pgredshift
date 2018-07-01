@@ -3,7 +3,8 @@ FROM postgres:10
 RUN apt-get update && \
 	apt-get install -y --no-install-recommends \
 	postgresql-server-dev-10 gcc make \
-	python python3 python-dev python-pip python-setuptools python-wheel \
+	python python-dev python-pip python-setuptools python-wheel \
+	python3 python3-pip python3-setuptools python3-wheel \
 	postgresql-plpython-10 postgresql-plpython3-10
 
 # Install Python 2 libraries native to Redshift. Versions available here:
@@ -16,7 +17,8 @@ RUN /usr/bin/python2.7 -m pip install \
 	pytz==2015.7 \
 	scipy==0.12.1 \
 	six==1.3.0 \
-	psycopg2==2.7.5
+	psycopg2==2.7.5 \
+	enum34==1.1.6
 # wsgiref==0.1.2 (Installed by default)
 
 # Compile query_group redshift compat extension

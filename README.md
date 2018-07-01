@@ -51,20 +51,18 @@ The following packages are installed:
 - SciPy 0.12.1
 - six 1.3.0
 - wsgiref 0.1.2
+- enum34 1.1.6 (Not available on Redshift)
 - psycopg2 2.7.5 (Not available on Redshift)
 
-Additional system packages available:
-
-- pip 9.0.1 (Not available on Redshift)
-- setuptools 33.1.1
-- wheel 0.29.0
-
+The image also includes pip, setuptools and wheel for Python 2.7.
 
 ### plpython3u
 
 The image is built with `plpython3u` (Python 3.5) language support.
 Although Redshift does not support Python 3, you may use this to help ensure
 compatibility of UDFs across multiple languages.
+
+The image includes pip, setuptools and wheel for Python 3.5.
 
 
 ### Postgres extensions
