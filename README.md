@@ -42,6 +42,24 @@ The image is built with `plpythonu` (Python 2.7) language support.
 More information:
 <https://docs.aws.amazon.com/redshift/latest/dg/udf-python-language-support.html>
 
+The following packages are installed:
+
+- NumPy 1.8.2
+- Pandas 0.18.1 (up from 0.14.1 on Redshift)
+- python-dateutil 2.2
+- PyTZ 2015.7
+- SciPy 0.12.1
+- six 1.3.0
+- wsgiref 0.1.2
+- psycopg2 2.7.5 (Not available on Redshift)
+
+Additional system packages available:
+
+- pip 9.0.1 (Not available on Redshift)
+- setuptools 33.1.1
+- wheel 0.29.0
+
+
 ### plpython3u
 
 The image is built with `plpython3u` (Python 3.5) language support.
