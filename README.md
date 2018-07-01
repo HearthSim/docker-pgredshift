@@ -75,5 +75,7 @@ For a list, see `sql/01_functions.sql`.
 
 ## License
 
-This project is licensed under the MIT license. The full license text is available in the LICENSE file.
-
+This project is dual-licensed under the MIT license and the PostgreSQL license.
+You may choose whichever license suits your purpose best.
+The full license texts are available in the `LICENSE` (MIT) and `LICENSE.PostgreSQL`
+(PostgreSQL License) files.
