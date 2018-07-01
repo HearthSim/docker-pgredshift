@@ -30,6 +30,10 @@ RUN \
 	sed "/shared_preload_libraries/d" -i /usr/share/postgresql/postgresql.conf.sample && \
 	echo "shared_preload_libraries = 'query_group'" >> /usr/share/postgresql/postgresql.conf.sample
 
+# Clean up unused packages and temp files
+RUN apt-get purge -y gcc make python-dev postgresql-server-dev-10 && \
+	rm -r /tmp/extensions
+
 COPY [ \
 	"sql/00_extensions.sql", \
 	"sql/00_stl_tables.sql", \
