@@ -36,6 +36,8 @@ in terms of feature parity. However, some key differences will remain:
 
 ## Features
 
+The pgredshift image is build on top of Debian "Buster".
+
 ### plpythonu
 
 The image is built with `plpythonu` (Python 2.7) language support.
@@ -58,11 +60,11 @@ The image also includes pip, setuptools and wheel for Python 2.7.
 
 ### plpython3u
 
-The image is built with `plpython3u` (Python 3.5) language support.
+The image is built with `plpython3u` (Python 3.6) language support.
 Although Redshift does not support Python 3, you may use this to help ensure
 compatibility of UDFs across Python 2 and 3.
 
-The image includes pip, setuptools and wheel for Python 3.5.
+The image includes pip, setuptools and wheel for Python 3.6.
 
 
 ### Postgres extensions
