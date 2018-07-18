@@ -17,7 +17,9 @@ RUN gosu nobody true && \
 	useradd -r -g postgres --uid=999 postgres
 
 ENV LANG=en_US.UTF-8 \
-	LC_ALL=en_US.UTF-8
+	LC_ALL=en_US.UTF-8 \
+	PG_MAJOR=10 \
+	PGDATA=/var/lib/postgresql/data
 
 RUN key="B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8"; \
 	export GNUPGHOME="$(mktemp -d)"; \
@@ -28,12 +30,7 @@ RUN key="B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8"; \
 	echo "deb-src http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main $PG_MAJOR" >> /etc/apt/sources.list.d/pgdg.list; \
 	apt-get update
 
-ENV \
-	PG_MAJOR=10 \
-	PG_VERSION=10.4-2 \
-	PGDATA=/var/lib/postgresql/data
-
-RUN apt-get install -y postgresql-common "postgresql-$PG_MAJOR=$PG_VERSION" && \
+RUN apt-get install -y postgresql-common postgresql-10 && \
 	sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf
 
 ENV PATH=$PATH:/usr/lib/postgresql/$PG_MAJOR/bin
@@ -52,7 +49,9 @@ RUN mkdir /docker-entrypoint-initdb.d && \
 	&& chmod 777 "$PGDATA"
 
 # recover docker-entrypoint.sh
-RUN curl "https://raw.githubusercontent.com/docker-library/postgres/master/$PG_MAJOR/docker-entrypoint.sh" -o /usr/local/bin/docker-entrypoint.sh
+RUN curl "https://raw.githubusercontent.com/docker-library/postgres/master/$PG_MAJOR/docker-entrypoint.sh" -o /usr/local/bin/docker-entrypoint.sh && \
+	chmod +x /usr/local/bin/docker-entrypoint.sh && \
+	ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
 
 ### end postgres 10
 
