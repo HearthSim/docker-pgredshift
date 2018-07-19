@@ -90,6 +90,7 @@ RUN sed "/shared_preload_libraries/d" -i /usr/share/postgresql/postgresql.conf.s
 # Clean up unused packages and temp files
 RUN rm -rf /var/lib/apt/lists/* && \
 	apt-get purge -y gcc make python2-dev python3-dev postgresql-server-dev-10 curl gnupg dirmngr && \
+	apt-get autoremove -y --purge && \
 	rm -r /tmp/extensions
 
 COPY [ \
