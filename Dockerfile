@@ -35,7 +35,7 @@ ENV LANG=en_US.UTF-8 \
 
 RUN key="B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8"; \
 	export GNUPGHOME="$(mktemp -d)"; \
-	gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
+	gpg --keyserver keyserver.ubuntu.com --recv-keys "$key"; \
 	gpg --export "$key" > /etc/apt/trusted.gpg.d/postgres.gpg; \
 	rm -rf "$GNUPGHOME" && \
 	echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main $PG_MAJOR" > /etc/apt/sources.list.d/pgdg.list; \
