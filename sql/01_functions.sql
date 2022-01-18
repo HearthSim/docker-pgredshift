@@ -41,3 +41,9 @@ CREATE AGGREGATE median(numeric) (
 	FINALFUNC=_final_median,
 	INITCOND='{}'
 );
+
+-- NOW() is deprecated in Redshift
+-- https://docs.aws.amazon.com/redshift/latest/dg/Date_functions_header.html#date-functions-deprecated
+CREATE OR REPLACE FUNCTION getdate() RETURNS TIMESTAMP immutable as $$
+    SELECT (NOW() AT TIME ZONE 'UTC')::timestamp(0)
+    $$ LANGUAGE sql;
