@@ -61,8 +61,8 @@ RUN mkdir /docker-entrypoint-initdb.d && \
 	&& chmod 777 "$PGDATA"
 
 # recover docker-entrypoint.sh
-RUN curl "https://raw.githubusercontent.com/docker-library/postgres/master/$PG_MAJOR/buster/docker-entrypoint.sh" -o /usr/local/bin/docker-entrypoint.sh --fail && \
-	chmod +x /usr/local/bin/docker-entrypoint.sh && \
+COPY "docker-entrypoint.sh" "/usr/local/bin/docker-entrypoint.sh"
+RUN	chmod +x /usr/local/bin/docker-entrypoint.sh && \
 	ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
 
 ### end postgres 10
