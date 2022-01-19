@@ -41,3 +41,51 @@ CREATE AGGREGATE median(numeric) (
 	FINALFUNC=_final_median,
 	INITCOND='{}'
 );
+
+-- Drops dependencies first
+DROP AGGREGATE IF EXISTS LISTAGG(text, text);
+DROP FUNCTION IF EXISTS LISTAGG_FINAL(LISTAGG_TYPE, text, text);
+DROP FUNCTION IF EXISTS LISTAGG_SFUNC(LISTAGG_TYPE, text, text);
+DROP TYPE IF EXISTS LISTAGG_TYPE;
+
+-- https://www.postgresql.org/docs/11/sql-createtype.html
+CREATE TYPE LISTAGG_TYPE AS (
+    a TEXT[],
+    delim TEXT
+);
+
+CREATE OR REPLACE FUNCTION LISTAGG_SFUNC(LISTAGG_TYPE, text, text)
+RETURNS LISTAGG_TYPE
+LANGUAGE 'plpgsql'
+AS $$
+	DECLARE
+		appended LISTAGG_TYPE;
+	BEGIN
+		appended.a := array_append($1.a, $2::text);
+		appended.delim := $3;
+		RETURN appended;
+	END;
+$$;
+
+CREATE OR REPLACE FUNCTION LISTAGG_FINAL(LISTAGG_TYPE, text, text)
+RETURNS TEXT
+LANGUAGE 'plpgsql'
+AS $$
+	BEGIN
+--		RAISE EXCEPTION 'BAD: %|%|%',$1,$2,$3;
+		RETURN ARRAY_TO_STRING($1.a,$1.delim);
+	END;
+$$;
+
+-- https://www.postgresql.org/docs/11/sql-createaggregate.html
+-- https://www.postgresql.org/docs/11/xaggr.html
+-- https://stackoverflow.com/q/67159133/326979
+-- https://stackoverflow.com/q/46411209/326979
+-- https://stackoverflow.com/a/48190288/326979
+CREATE AGGREGATE LISTAGG(text, text) (
+	sfunc = LISTAGG_SFUNC,
+  stype = LISTAGG_TYPE,
+  initcond = '({},",")',
+  finalfunc = LISTAGG_FINAL,
+	FINALFUNC_EXTRA
+);
