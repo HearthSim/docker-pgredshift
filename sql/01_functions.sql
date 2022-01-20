@@ -1,5 +1,5 @@
 -- https://docs.aws.amazon.com/redshift/latest/dg/JSON_EXTRACT_ARRAY_ELEMENT_TEXT.html
-DROP FUNCTION IF EXISTS json_extract_array_element_text;
+DROP FUNCTION IF EXISTS json_extract_array_element_text(text, int);
 CREATE OR REPLACE FUNCTION json_extract_array_element_text(json_array text, array_index int)
 RETURNS text immutable
 STRICT
@@ -17,7 +17,7 @@ $$;
 -- https://docs.aws.amazon.com/redshift/latest/dg/JSON_EXTRACT_PATH_TEXT.html
 -- This isn't needed as postgres include json_extract_path_text a function that does something similar.
 -- See https://www.postgresql.org/docs/10/functions-json.html
-DROP FUNCTION IF EXISTS json_extract_path_text;
+DROP FUNCTION IF EXISTS json_extract_path_text(text, character[]);
 CREATE OR REPLACE FUNCTION json_extract_path_text(json_string text, VARIADIC path_elems character[])
 RETURNS text immutable
 STRICT
