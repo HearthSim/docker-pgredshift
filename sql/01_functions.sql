@@ -1,25 +1,40 @@
--- json_extract_array_element_text()
-CREATE OR REPLACE FUNCTION json_extract_array_element_text(json_array text, array_index int) RETURNS text immutable as $$
+-- https://docs.aws.amazon.com/redshift/latest/dg/JSON_EXTRACT_ARRAY_ELEMENT_TEXT.html
+DROP FUNCTION IF EXISTS json_extract_array_element_text;
+CREATE OR REPLACE FUNCTION json_extract_array_element_text(json_array text, array_index int)
+RETURNS text immutable
+STRICT
+LANGUAGE plpythonu
+AS $$
 	import json
 	items = json.loads(json_array)
 	if 0 <= array_index and array_index < len(items):
 		return json.dumps(items[array_index]).strip('"')
 	else:
 		return None
-$$ LANGUAGE plpythonu;
+$$;
 
--- json_extract_path_text()
-CREATE FUNCTION json_extract_path_text(json_string text, VARIADIC path_elems character[]) RETURNS text immutable as $$
+
+-- https://docs.aws.amazon.com/redshift/latest/dg/JSON_EXTRACT_PATH_TEXT.html
+-- This isn't needed as postgres include json_extract_path_text a function that does something similar.
+-- See https://www.postgresql.org/docs/10/functions-json.html
+DROP FUNCTION IF EXISTS json_extract_path_text;
+CREATE OR REPLACE FUNCTION json_extract_path_text(json_string text, VARIADIC path_elems character[])
+RETURNS text immutable
+STRICT
+LANGUAGE plpythonu
+AS $$
   import json
   result = json.loads(json_string)
   for path_elem in path_elems:
-      if path_elem not in result: return None
+      if path_elem not in result: return ""
       result = result[path_elem]
   return json.dumps(result).strip('"')
-$$ LANGUAGE plpythonu;
+$$;
 
--- json_array_length()
-CREATE FUNCTION json_array_length(json_array text) RETURNS int immutable as $$
+
+-- https://docs.aws.amazon.com/redshift/latest/dg/JSON_ARRAY_LENGTH.html
+DROP FUNCTION IF EXISTS json_array_length;
+CREATE OR REPLACE FUNCTION json_array_length(json_array text) RETURNS int immutable as $$
 import json
 return len(json.loads(json_array))
 $$ LANGUAGE plpythonu;
