@@ -41,3 +41,44 @@ CREATE AGGREGATE median(numeric) (
 	FINALFUNC=_final_median,
 	INITCOND='{}'
 );
+
+-- https://docs.aws.amazon.com/redshift/latest/dg/REGEXP_SUBSTR.html
+CREATE OR REPLACE FUNCTION REGEXP_SUBSTR(source_string varchar, pattern varchar)
+RETURNS varchar
+LANGUAGE plpgsql
+AS $$
+	DECLARE
+		first_match varchar;
+	BEGIN
+		first_match := (
+			REGEXP_MATCH(
+				source_string,
+				REGEXP_REPLACE(pattern, '\\+', '\', 'g')
+			)
+		)[1];
+		IF first_match IS NULL THEN
+			RETURN '';
+		END IF;
+		RETURN first_match;
+	END;
+$$;
+
+CREATE OR REPLACE FUNCTION REGEXP_SUBSTR(source_string name, pattern varchar)
+RETURNS varchar
+LANGUAGE plpgsql
+AS $$
+	DECLARE
+		first_match varchar;
+	BEGIN
+		first_match := (
+			REGEXP_MATCH(
+				source_string,
+				REGEXP_REPLACE(pattern, '\\+', '\', 'g')
+			)
+		)[1];
+		IF first_match IS NULL THEN
+			RETURN '';
+		END IF;
+		RETURN first_match;
+	END;
+$$;
