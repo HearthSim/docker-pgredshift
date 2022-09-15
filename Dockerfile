@@ -112,7 +112,7 @@ COPY [ \
 	"sql/01_functions.sql", \
 	"/docker-entrypoint-initdb.d/"]
 
-ENV POSTGRES_DB dev
+ENV POSTGRES_DB redshift
 
 VOLUME /var/lib/postgresql/data
 ENTRYPOINT ["docker-entrypoint.sh"]
