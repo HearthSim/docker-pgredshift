@@ -1,7 +1,7 @@
 # docker-pgredshift
 
-A docker image based on the [postgres image](https://hub.docker.com/_/postgres/)
-which simulates an [AWS Redshift](https://aws.amazon.com/redshift/) instance.
+A docker image based on Debian with PostgreSQL which simulates an
+[AWS Redshift](https://aws.amazon.com/redshift/) instance.
 
 
 ## Why?

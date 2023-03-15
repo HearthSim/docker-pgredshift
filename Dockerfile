@@ -1,5 +1,9 @@
 FROM debian:buster
 
+LABEL org.opencontainers.image.source=https://github.com/HearthSim/docker-pgredshift
+LABEL org.opencontainers.image.description="A docker image based on the postgres image which simulates an AWS Redshift instance."
+LABEL org.opencontainers.image.licenses=MIT
+
 ENV DEBIAN_FRONTEND=noninteractive
 
 # make the "en_US.UTF-8" locale so postgres will be utf-8 enabled by default
