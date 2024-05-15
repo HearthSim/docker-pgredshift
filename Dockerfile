@@ -9,10 +9,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 # make the "en_US.UTF-8" locale so postgres will be utf-8 enabled by default
 RUN set -eux; \
 	if [ -f /etc/dpkg/dpkg.cfg.d/docker ]; then \
-# if this file exists, we're likely in "debian:xxx-slim", and locales are thus being excluded so we need to remove that exclusion (since we need locales)
-		grep -q '/usr/share/locale' /etc/dpkg/dpkg.cfg.d/docker; \
-		sed -ri '/\/usr\/share\/locale/d' /etc/dpkg/dpkg.cfg.d/docker; \
-		! grep -q '/usr/share/locale' /etc/dpkg/dpkg.cfg.d/docker; \
+	# if this file exists, we're likely in "debian:xxx-slim", and locales are thus being excluded so we need to remove that exclusion (since we need locales)
+	grep -q '/usr/share/locale' /etc/dpkg/dpkg.cfg.d/docker; \
+	sed -ri '/\/usr\/share\/locale/d' /etc/dpkg/dpkg.cfg.d/docker; \
+	! grep -q '/usr/share/locale' /etc/dpkg/dpkg.cfg.d/docker; \
 	fi; \
 	apt-get update; apt-get install -y locales; rm -rf /var/lib/apt/lists/*; \
 	localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
@@ -78,13 +78,15 @@ RUN apt-get install -y --no-install-recommends \
 	python3 python3-dev python3-pip python3-setuptools python3-wheel
 
 
+RUN apt-get install -y g++ --no-install-recommends libopenblas-dev gfortran
+
 # Install Python 2 libraries native to Redshift. Versions available here:
 # https://docs.aws.amazon.com/redshift/latest/dg/udf-python-language-support.html
 # NOTE: pandas 0.18.1 instead of 0.14.1 due to lack of wheel for <0.18.1
-RUN /usr/bin/python2.7 -m pip install \
-	numpy==1.8.2 \
-	pandas==0.18.1 \
-	python-dateutil==2.2 \
+RUN /usr/bin/python2.7 -m pip install numpy==1.8.2
+RUN /usr/bin/python2.7 -m pip install cython==0.29.37 
+RUN /usr/bin/python2.7 -m pip install pandas==0.18.1 
+RUN /usr/bin/python2.7 -m pip install python-dateutil==2.2 \
 	pytz==2015.7 \
 	scipy==0.12.1 \
 	six==1.3.0 \
