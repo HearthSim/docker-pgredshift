@@ -42,8 +42,8 @@ RUN key="B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8"; \
 	gpg --keyserver keyserver.ubuntu.com --recv-keys "$key"; \
 	gpg --export "$key" > /etc/apt/trusted.gpg.d/postgres.gpg; \
 	rm -rf "$GNUPGHOME" && \
-	echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main $PG_MAJOR" > /etc/apt/sources.list.d/pgdg.list; \
-	echo "deb-src http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main $PG_MAJOR" >> /etc/apt/sources.list.d/pgdg.list; \
+	echo "deb http://apt-archive.postgresql.org/pub/repos/apt/ buster-pgdg main $PG_MAJOR" > /etc/apt/sources.list.d/pgdg.list; \
+	echo "deb-src http://apt-archive.postgresql.org/pub/repos/apt/ buster-pgdg main $PG_MAJOR" >> /etc/apt/sources.list.d/pgdg.list; \
 	apt-get update
 
 RUN apt-get install -y postgresql-common postgresql-10 && \
