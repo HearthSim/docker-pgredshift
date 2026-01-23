@@ -6,6 +6,11 @@ LABEL org.opencontainers.image.licenses=MIT
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# fetch packages from archive
+RUN echo deb http://archive.debian.org/debian buster main contrib non-free > /etc/apt/sources.list
+RUN echo deb http://archive.debian.org/debian-security buster/updates main >> /etc/apt/sources.list
+RUN echo deb http://archive.debian.org/debian buster-updates main >> /etc/apt/sources.list
+
 # make the "en_US.UTF-8" locale so postgres will be utf-8 enabled by default
 RUN set -eux; \
 	if [ -f /etc/dpkg/dpkg.cfg.d/docker ]; then \
