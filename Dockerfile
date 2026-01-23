@@ -16,7 +16,7 @@ RUN set -eux; \
 	fi; \
 	apt-get update; apt-get install -y locales; rm -rf /var/lib/apt/lists/*; \
 	localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
-ENV LANG en_US.utf8
+ENV LANG=en_US.utf8
 
 # install "nss_wrapper" in case we need to fake "/etc/passwd" and "/etc/group" (especially for OpenShift)
 # https://github.com/docker-library/postgres/issues/359
@@ -116,7 +116,7 @@ COPY [ \
 	"sql/01_functions.sql", \
 	"/docker-entrypoint-initdb.d/"]
 
-ENV POSTGRES_DB dev
+ENV POSTGRES_DB=dev
 
 VOLUME /var/lib/postgresql/data
 ENTRYPOINT ["docker-entrypoint.sh"]
